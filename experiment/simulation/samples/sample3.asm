@@ -1,0 +1,6 @@
+# Mixed Memory + ALU
+ADD R1, R2, R3
+SUB R4, R1, R5
+ADD R6, R7, R8
+MUL R9, R4, R6
+STORE R9, 100(R0)
