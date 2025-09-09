@@ -1,10 +1,9 @@
-## Procedure
-
 Follow these step-by-step instructions to understand and explore Reorder Buffer and Out-of-Order Execution using the interactive simulator.
 
 ### Step 1: Understanding the Interface
 
 1. **Observe the Initial State**
+
    - Notice that all ROB entries start in the **Empty** state
    - The Register Alias Table (RAT) shows all registers mapped to their initial values
    - The instruction queue is empty and ready to accept programs
@@ -21,16 +20,19 @@ Follow these step-by-step instructions to understand and explore Reorder Buffer 
 ### Step 2: Basic Out-of-Order Execution
 
 1. **Load the Basic Example**
+
    - Click **"Basic Example"** to load a simple instruction sequence
    - Observe the assembly code with arithmetic operations
    - Notice the mix of ADD, SUB, and MUL instructions
 
 2. **Execute Single Steps**
+
    - Click **"Step"** to advance one cycle at a time
    - Watch how instructions are **issued** to ROB entries
    - Observe the **state transitions**: Issue → Execute → Complete → Commit
 
 3. **Analyze Issue Phase**
+
    - Notice that multiple instructions can be issued in the same cycle
    - Watch how ROB entries are allocated sequentially (tail pointer advancement)
    - Observe register renaming in the RAT when destinations are mapped to ROB entries
@@ -43,15 +45,18 @@ Follow these step-by-step instructions to understand and explore Reorder Buffer 
 ### Step 3: Register Renaming and Dependency Handling
 
 1. **Load the Dependencies Sample**
+
    - Click **"Dependencies"** to load a program with register dependencies
    - Study the instruction sequence that demonstrates true and false dependencies
 
 2. **Track Register Renaming**
+
    - Watch how multiple writes to the same register get different ROB entries
    - Observe the RAT updates as new instructions are issued
    - Notice how false dependencies (WAW, WAR) are eliminated
 
 3. **Analyze Dependency Resolution**
+
    - See how dependent instructions wait for their operands
    - Watch result forwarding from completed instructions to waiting ones
    - Observe the execution timeline showing parallel execution of independent operations
@@ -64,11 +69,13 @@ Follow these step-by-step instructions to understand and explore Reorder Buffer 
 ### Step 4: Performance Analysis
 
 1. **Monitor ROB Utilization**
+
    - Run the simulation and watch ROB utilization percentage
    - Notice how utilization indicates instruction-level parallelism
    - Observe the relationship between program structure and ROB occupancy
 
 2. **Analyze Execution Timeline**
+
    - Study the visual timeline showing instruction stages
    - Identify overlapping execution phases
    - Compare execution order with program order
@@ -81,15 +88,18 @@ Follow these step-by-step instructions to understand and explore Reorder Buffer 
 ### Step 5: Exception Handling and Precise Interrupts
 
 1. **Load the Exception Test Program**
+
    - Click **"Exception Test"** to load a program with potential exceptions
    - Notice the DIV instruction that may cause division by zero
 
 2. **Trigger an Exception**
+
    - Run the simulation or use **"Trigger Exception"** button
    - Observe how exceptions are marked in ROB entries
    - Watch the exception handling when the faulting instruction reaches ROB head
 
 3. **Study Recovery Process**
+
    - See how younger instructions are flushed from the pipeline
    - Notice that older instructions continue to commit normally
    - Observe how precise interrupt state is maintained
@@ -102,6 +112,7 @@ Follow these step-by-step instructions to understand and explore Reorder Buffer 
 ### Step 6: Advanced Instruction Patterns
 
 1. **Create Custom Programs**
+
    - Use the **"Custom Assembly"** option to enter your own instruction sequences
    - Try different patterns:
      ```assembly
@@ -112,6 +123,7 @@ Follow these step-by-step instructions to understand and explore Reorder Buffer 
      ```
 
 2. **Experiment with Loop Patterns**
+
    - Create simple loops with independent iterations
    - Observe how ROB handles repetitive patterns
    - Study the impact of loop unrolling on ROB utilization
@@ -124,11 +136,13 @@ Follow these step-by-step instructions to understand and explore Reorder Buffer 
 ### Step 7: Comparative Analysis
 
 1. **Run Simulation at Different Speeds**
+
    - Adjust the simulation speed slider
    - Use slow speeds for detailed observation
    - Use fast speeds for overall behavior analysis
 
 2. **Compare Different Instruction Mixes**
+
    - Test compute-intensive programs (many ALU operations)
    - Test memory-intensive programs (frequent LOAD/STORE)
    - Test mixed workloads with various instruction types
@@ -141,11 +155,13 @@ Follow these step-by-step instructions to understand and explore Reorder Buffer 
 ### Step 8: Interactive Experimentation
 
 1. **Manual Instruction Addition**
+
    - Use the operation dropdown to add individual instructions
    - Build custom dependency chains
    - Experiment with different instruction sequences
 
 2. **State Inspection**
+
    - Click on ROB entries to examine detailed state
    - Study register values and ROB mappings
    - Trace instruction flow through the timeline
@@ -158,11 +174,13 @@ Follow these step-by-step instructions to understand and explore Reorder Buffer 
 ### Step 9: Performance Optimization Study
 
 1. **Identify Bottlenecks**
+
    - Look for patterns where ROB utilization is low
    - Identify dependency chains that limit parallelism
    - Study resource conflicts and their impact
 
 2. **Optimization Experiments**
+
    - Reorder independent instructions to improve parallelism
    - Add independent operations to fill execution slots
    - Study the impact of instruction scheduling on performance
@@ -175,11 +193,13 @@ Follow these step-by-step instructions to understand and explore Reorder Buffer 
 ### Step 10: Advanced Scenarios
 
 1. **Complex Dependency Patterns**
+
    - Create programs with complex dependency graphs
    - Test scenarios with multiple dependency chains
    - Study how ROB handles intricate instruction relationships
 
 2. **Resource Contention**
+
    - Create scenarios where multiple instructions compete for resources
    - Observe how the simulator handles resource conflicts
    - Study the impact of limited functional units
@@ -220,11 +240,13 @@ During your experiments, consider these questions:
 ### Documentation
 
 1. **Record Observations**
+
    - Document interesting patterns you observe
    - Note performance improvements in different scenarios
    - Record any unexpected behaviors and their explanations
 
 2. **Create Test Cases**
+
    - Design specific scenarios to test ROB features
    - Document instruction sequences that demonstrate key concepts
    - Share findings with classmates for discussion
