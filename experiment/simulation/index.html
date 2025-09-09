@@ -1,13 +1,406 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<!-- Add CSS at the head of HTML file -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reorder Buffer Simulation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-		<!-- Your code goes here-->
+    <div class="container is-fluid">
+        <!-- Header -->
+        <section class="hero is-primary is-small">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title is-3">
+                        <i class="fas fa-microchip"></i>
+                        Reorder Buffer Simulation
+                    </h1>
+                    <p class="subtitle is-5">
+                        Interactive Out-of-Order Execution with Precise Interrupts
+                    </p>
+                </div>
+            </div>
+        </section>
 
-	<!-- Add JS at the bottom of HTML file --> 
-        <script src="./js/main.js"></script>
+        <!-- How to Use This Simulator -->
+        <section class="section pt-4">
+            <div class="container">
+                <div class="box">
+                    <h2 class="title is-3 has-text-centered">How to Use This Simulator</h2>
+                    
+                    <div class="columns">
+                        <div class="column is-half">
+                            <div class="content">
+                                <h4 class="subtitle is-5">Key Concepts:</h4>
+                                <ul>
+                                    <li><strong>ROB States:</strong> Issue → Execute → Complete → Commit</li>
+                                    <li><strong>Register Renaming:</strong> RAT maps registers to ROB entries</li>
+                                    <li><strong>Out-of-Order Execution:</strong> Instructions complete when ready</li>
+                                    <li><strong>In-Order Commit:</strong> Results written in program order</li>
+                                    <li><strong>Precise Interrupts:</strong> Exact program state maintained</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="column is-half">
+                            <div class="content">
+                                <h4 class="subtitle is-5">Instructions:</h4>
+                                <ol>
+                                    <li>Load sample programs or write custom assembly</li>
+                                    <li>Click "Load Program" to parse instructions</li>
+                                    <li>Use "Step" for cycle-by-cycle execution</li>
+                                    <li>Use "Run" for continuous execution</li>
+                                    <li>Watch ROB entries and register renaming</li>
+                                    <li>Observe commit order vs execution order</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Controls Section -->
+        <section class="section">
+            <div class="columns">
+                <!-- Instruction Input Panel -->
+                <div class="column is-one-third">
+                    <div class="box">
+                        <h2 class="title is-4">
+                            <i class="fas fa-code"></i>
+                            Instruction Input
+                        </h2>
+                        
+                        <!-- Sample Programs -->
+                        <div class="field">
+                            <label class="label">Sample Programs</label>
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    <div class="select is-fullwidth">
+                                        <select id="sampleSelector">
+                                            <option value="1">1. Basic Dependency Chain</option>
+                                            <option value="2">2. Mixed Memory + ALU</option>
+                                            <option value="3">3. Exception / DIV Focus</option>
+                                            <option value="4">4. Branch Illustration</option>
+                                            <option value="5">5. Independent ILP</option>
+                                            <option value="6">6. Memory Traffic Focus</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <button class="button is-info is-small" onclick="loadSelectedSample()">
+                                        <span class="icon"><i class="fas fa-file-import"></i></span>
+                                        <span>Load</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="help">Select a sample, click Load, then press "Load Program" below to parse.</p>
+                        </div>
+
+                        <!-- Manual Instruction Entry -->
+                        <div class="field">
+                            <label class="label">Add Individual Instruction</label>
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    <div class="select is-fullwidth">
+                                        <select id="operation">
+                                            <option value="ADD">ADD</option>
+                                            <option value="SUB">SUB</option>
+                                            <option value="MUL">MUL</option>
+                                            <option value="DIV">DIV</option>
+                                            <option value="LOAD">LOAD</option>
+                                            <option value="STORE">STORE</option>
+                                            <option value="BEQ">BEQ</option>
+                                            <option value="BNE">BNE</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <button class="button is-primary" onclick="addInstruction()">
+                                        <span class="icon"><i class="fas fa-plus"></i></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Custom Assembly -->
+                        <div class="field">
+                            <label class="label">Custom Assembly Code</label>
+                            <div class="control">
+                                <textarea id="assemblyInput" class="textarea" rows="8" 
+                                          placeholder="Enter assembly instructions...
+Example:
+ADD R1, R2, R3
+SUB R4, R1, R5
+LOAD R6, 100(R0)
+STORE R4, 200(R0)"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Control Buttons -->
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-success" onclick="loadProgram()">
+                                    <span class="icon"><i class="fas fa-upload"></i></span>
+                                    <span>Load Program</span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-warning" onclick="resetSimulation()">
+                                    <span class="icon"><i class="fas fa-redo"></i></span>
+                                    <span>Reset</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Controls -->
+                <div class="column is-one-third">
+                    <div class="box">
+                        <h2 class="title is-4">
+                            <i class="fas fa-play-circle"></i>
+                            Simulation Control
+                        </h2>
+
+                        <!-- Execution Controls -->
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-primary" onclick="stepExecution()" id="stepBtn">
+                                    <span class="icon"><i class="fas fa-step-forward"></i></span>
+                                    <span>Step</span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-info" onclick="runSimulation()" id="runBtn">
+                                    <span class="icon"><i class="fas fa-play"></i></span>
+                                    <span>Run</span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-danger" onclick="pauseSimulation()" id="pauseBtn" disabled>
+                                    <span class="icon"><i class="fas fa-pause"></i></span>
+                                    <span>Pause</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Simulation Speed -->
+                        <div class="field">
+                            <label class="label">Simulation Speed</label>
+                            <div class="control">
+                                <input type="range" class="slider is-fullwidth" id="speedSlider" 
+                                       min="100" max="2000" value="1000" step="100">
+                                <p class="help">Delay: <span id="speedValue">1000</span>ms per cycle</p>
+                            </div>
+                        </div>
+
+                        <!-- Current Cycle -->
+                        <div class="field">
+                            <label class="label">Current Cycle</label>
+                            <div class="control">
+                                <input class="input" type="text" id="currentCycle" value="0" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Exception Simulation -->
+                        <div class="field">
+                            <label class="label">Exception Testing</label>
+                            <div class="control">
+                                <button class="button is-warning is-small" onclick="simulateException()">
+                                    <span class="icon"><i class="fas fa-exclamation-triangle"></i></span>
+                                    <span>Trigger Exception</span>
+                                </button>
+                            </div>
+                            <p class="help">Test precise interrupt handling</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Panel -->
+                <div class="column is-one-third">
+                    <div class="box">
+                        <h2 class="title is-4">
+                            <i class="fas fa-chart-bar"></i>
+                            Performance Metrics
+                        </h2>
+                        
+                        <div class="content">
+                            <table class="table is-fullwidth is-narrow">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Instructions Issued:</strong></td>
+                                        <td><span id="instructionsIssued">0</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Instructions Completed:</strong></td>
+                                        <td><span id="instructionsCompleted">0</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Instructions Committed:</strong></td>
+                                        <td><span id="instructionsCommitted">0</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>ROB Utilization:</strong></td>
+                                        <td><span id="robUtilization">0%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Average CPI:</strong></td>
+                                        <td><span id="averageCPI">-</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Total Cycles:</strong></td>
+                                        <td><span id="totalCycles">0</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- ROB Status -->
+                        <div class="field">
+                            <label class="label">ROB Status</label>
+                            <progress class="progress is-info" id="robProgress" value="0" max="16">0%</progress>
+                            <p class="help">Reorder Buffer Occupancy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Processor State Visualization -->
+        <section class="section">
+            <div class="columns">
+                <!-- Instruction Queue -->
+                <div class="column is-one-quarter">
+                    <div class="box">
+                        <h3 class="title is-5">
+                            <i class="fas fa-list"></i>
+                            Instruction Queue
+                        </h3>
+                        <div id="instructionQueue" class="instruction-list">
+                            <p class="has-text-grey">No instructions loaded</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reorder Buffer -->
+                <div class="column is-half">
+                    <div class="box">
+                        <h3 class="title is-5">
+                            <i class="fas fa-buffer"></i>
+                            Reorder Buffer (ROB)
+                        </h3>
+                        <div class="table-container">
+                            <table class="table is-fullwidth is-narrow is-hoverable">
+                                <thead>
+                                    <tr>
+                                        <th>Entry</th>
+                                        <th>Instruction</th>
+                                        <th>State</th>
+                                        <th>Destination</th>
+                                        <th>Value</th>
+                                        <th>Exception</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="robTable">
+                                    <!-- ROB entries will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Register Alias Table -->
+                <div class="column is-one-quarter">
+                    <div class="box">
+                        <h3 class="title is-5">
+                            <i class="fas fa-table"></i>
+                            Register Alias Table
+                        </h3>
+                        <div class="table-container">
+                            <table class="table is-fullwidth is-narrow">
+                                <thead>
+                                    <tr>
+                                        <th>Reg</th>
+                                        <th>ROB#</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ratTable">
+                                    <!-- Register mappings will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Execution Timeline -->
+        <section class="section">
+            <div class="box">
+                <h3 class="title is-5">
+                    <i class="fas fa-timeline"></i>
+                    Instruction Execution Timeline
+                </h3>
+                <div id="executionTimeline" class="timeline-container">
+                    <p class="has-text-grey">Start simulation to see execution timeline</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Commit Log -->
+        <section class="section">
+            <div class="box">
+                <h3 class="title is-5">
+                    <i class="fas fa-history"></i>
+                    Commit Log
+                </h3>
+                <div id="commitLog" class="log-container">
+                    <p class="has-text-grey">No instructions committed yet</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Reorder Buffer Help</p>
+                <button class="delete" aria-label="close" onclick="closeModal()"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="content">
+                    <h4>Instruction Format:</h4>
+                    <ul>
+                        <li><strong>ADD/SUB/MUL/DIV:</strong> OP Rd, Rs1, Rs2</li>
+                        <li><strong>LOAD:</strong> LOAD Rd, offset(Rs)</li>
+                        <li><strong>STORE:</strong> STORE Rs, offset(Rd)</li>
+                        <li><strong>Branch:</strong> BEQ/BNE Rs1, Rs2, label</li>
+                    </ul>
+                    
+                    <h4>ROB States:</h4>
+                    <ul>
+                        <li><strong>Issue:</strong> Instruction issued to ROB</li>
+                        <li><strong>Execute:</strong> Instruction executing</li>
+                        <li><strong>Complete:</strong> Execution finished</li>
+                        <li><strong>Commit:</strong> Results committed to register file</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Help Button -->
+    <button class="button is-info is-rounded help-button" onclick="openModal()">
+        <span class="icon"><i class="fas fa-question"></i></span>
+    </button>
+
+    <script src="./js/main.js"></script>
 </body>
 </html>
