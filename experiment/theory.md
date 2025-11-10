@@ -102,12 +102,12 @@ The Reorder Buffer serves dual purposes:
 
 Consider this instruction sequence:
 
-```assembly
+<pre>assembly
 ADD R1, R2, R3    ; R1 = R2 + R3
 SUB R4, R1, R5    ; R4 = R1 - R5 (depends on ADD)
 MUL R1, R6, R7    ; R1 = R6 * R7 (WAW with ADD)
 AND R8, R1, R9    ; R8 = R1 & R9 (depends on MUL, not ADD)
-```
+</pre>
 
 With ROB-based renaming:
 
@@ -124,21 +124,21 @@ The false WAW dependency between ADD and MUL is eliminated.
 
 **Without Out-of-Order Execution**:
 
-```
+<pre>
 Cycle: 1  2  3  4  5  6  7  8
 ADD:   E  E  E  -  -  -  -  -
 MUL:   -  -  -  E  E  E  E  E
 SUB:   -  -  -  -  -  -  -  E
-```
+</pre>
 
 **With Out-of-Order Execution**:
 
-```
+<pre>
 Cycle: 1  2  3  4  5  6  7  8
 ADD:   E  E  E  -  -  -  -  -
 MUL:   E  E  E  E  E  -  -  -
 SUB:   -  -  -  E  -  -  -  -
-```
+</pre>
 
 #### Performance Improvements
 
