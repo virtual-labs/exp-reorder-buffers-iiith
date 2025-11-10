@@ -115,12 +115,12 @@ Follow these step-by-step instructions to understand and explore Reorder Buffer 
 
    - Use the **"Custom Assembly"** option to enter your own instruction sequences
    - Try different patterns:
-     ```assembly
+     <pre>
      ADD R1, R2, R3
      SUB R4, R5, R6    # Independent - can execute in parallel
      MUL R7, R1, R8    # Depends on ADD result
      AND R9, R4, R10   # Depends on SUB result
-     ```
+     </pre>
 
 2. **Experiment with Loop Patterns**
 
