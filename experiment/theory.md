@@ -102,7 +102,7 @@ The Reorder Buffer serves dual purposes:
 
 Consider this instruction sequence:
 
-<pre>assembly
+<pre>
 ADD R1, R2, R3    ; R1 = R2 + R3
 SUB R4, R1, R5    ; R4 = R1 - R5 (depends on ADD)
 MUL R1, R6, R7    ; R1 = R6 * R7 (WAW with ADD)
