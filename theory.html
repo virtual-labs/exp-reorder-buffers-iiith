@@ -1,0 +1,747 @@
+<!DOCTYPE html><html lang="en"><head>
+      <!--Google Tag Manager-->
+      <script class="gtm">
+        var dataLayer = [{
+        'labName': 'Virtual Lab',
+        'discipline': 'Test',
+        'college': 'IIITH',
+        'phase': 'Testing',
+        'expName': 'REORDER BUFFER AND OUT-OF-ORDER EXECUTION',
+        'expShortName': 'reorder-buffers'
+        }];
+    
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5NMQ9NQ');
+      </script>
+      <!--End Google Tag Manager-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    
+    	<meta name="experiment-short-name" content="reorder-buffers">
+    	<meta name="developer-institute" content="IIITH">
+    	<meta name="learning-unit" content="REORDER BUFFER AND OUT-OF-ORDER EXECUTION">
+    	<meta name="task-name" content="Theory">
+    
+    <!-- For iPhone -->
+    <meta name="msapplication-TileColor" content="#4076e0">
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#4076e0">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#4076e0">
+    <title>Virtual Labs</title>
+    <link rel="shortcut icon" href="./assets/images/favicon.ico">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" integrity="sha512-Oy18vBnbSJkXTndr2n6lDMO5NN31UljR8e/ICzVPrGpSud4Gkckb8yUpqhKuUNoE+o9gAb4O/rAxxw1ojyUVzg==" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&amp;family=Raleway&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/css/github-markdown.min.css">
+    <link rel="stylesheet" href="./assets/css/vlabs-style.css">
+    <link rel="stylesheet" href="./assets/css/toast.css">
+    <link rel="stylesheet" href="./assets/katex_assets/katex.min.css">
+    
+    <script src="./assets/js/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      h1 {
+      font-size: 1.8rem;
+      }
+      h2 {
+      font-size: 1.4rem;
+      }
+      h3 {
+      font-size: 1.2rem;
+      }
+
+      h2, h3 {
+      font-weight: 800;
+      }
+    </style>
+    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"></head>
+  <body class="p-0 container-fluid vlabs-page d-flex flex-column justify-content-between">
+      <!--Google Tag Manager (noscript)-->
+      <noscript class="gtm">
+        <iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-5NMQ9NQ" style="display:none;visibility:hidden" width="0">
+        </iframe>
+      </noscript>
+      <!--End Google Tag Manager (noscript)-->
+  
+      <header class="vlabs-header sticky-top bg-white">
+        <nav class="p-0 navbar navbar-light d-flex align-items-stretch">
+          
+          <button class="navbar-toggler px-4" type="button" onclick="toggle()">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="d-flex justify-content-center">        
+            <a href="https://vlab.co.in" class="navbar-brand">
+              <img src="./assets/images/vlabs-color-small-moe.jpg" alt="vlabs logo" class="vlabs-logo">
+            </a>
+          </div>
+          
+          <div id="headerNavbar" class="d-none border-top flex-grow-1 d-lg-flex align-items-center justify-content-end">
+            <div class="svc-rating-display">
+                <rating-display spreadsheetid="1x12nhpp0QvnsA6x-O1sV4IA9SAbfVsq_wiexWkutOmU" sheetname="Experiment-Database" columnname="Experiment Short Name" columnvalue="reorder-buffers" imagesdirectory="/plugins/svc-rating/images/">
+                </rating-display>
+            </div>      <div class="svc-rating-submit">
+                <rating-submit title="Rate" this="" experiment="">
+                </rating-submit>
+            </div>      <bug-report id="bug-report" title="[BUG REPORT] REORDER BUFFER AND OUT-OF-ORDER EXECUTION" page-type="text" context-info="{&quot;organisation&quot;:&quot;Virtual Labs&quot;,&quot;developer_institute&quot;:&quot;IIITH&quot;,&quot;expname&quot;:&quot;REORDER BUFFER AND OUT-OF-ORDER EXECUTION&quot;,&quot;labname&quot;:&quot;Virtual Lab&quot;,&quot;phase&quot;:&quot;Testing&quot;}" checkbox-json="{&quot;text&quot;:[&quot;Insufficient Content&quot;],&quot;video&quot;:[&quot;Insufficient Content&quot;],&quot;assesment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;assessment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;simulation&quot;:[&quot;Simulation Not Working&quot;,&quot;Incorrect Results/Observations&quot;,&quot;Insufficient/Incorrect Instructions&quot;],&quot;DEFAULT&quot;:[&quot;Page Not Loading&quot;,&quot;Content Not Visible&quot;,&quot;Incorrect Content&quot;]}" button_style="border: none; color: #fff; background-color: #288ec8; text-align: center; font-size: 1.05rem; border-radius: 1em;padding: 0.6em 1.2em; margin: 0 10px" position="override" custom_button_class="v-button"></bug-report>
+          </div>
+        </nav>
+      </header>
+      <div class="container-fluid flex-fill d-flex flex-column vlabs-page-main">
+        <div class="row d-flex justify-content-between">
+          <div class="flex-column">
+          <div class="row py-4 px-4 breadcrumbs">
+          	<div class="title is-4 tools">Tools</div>
+          	<span class="mx-2">
+          		<i aria-hidden="true" class="fa fa-angle-right"></i>
+          	</span>
+          	<a href="performance-report.html" class="my-2 mx-3" target="_blank">
+          		<button class="v-button">Performance Tool</button>
+          	</a>
+          	<a href="validator-report.html" class="my-2 mx-3" target="_blank">
+          		<button class="v-button">Validation Tool</button>
+          	</a>
+          </div>
+          </div>
+        </div>
+        <div class="row flex-grow-1 d-flex flex-nowrap flex-column flex-lg-row">
+          <div class="modal fade popupmenu" id="popupMenu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                              <a href="https://vlab.co.in" class="navbar-brand">
+                                  <img src="./assets/images/vlabs-color-small-moe.jpg" alt="vlabs logo" class="vlabs-logo">
+                              </a>
+                          </h5>
+                          <button type="button" class="btn-close align-self-center" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body nav-menu">
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="index.html" class="p-2 ">
+                                      Aim
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="theory.html" class="p-2  current-item ">
+                                      Theory
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="pretest.html" class="p-2 ">
+                                      Pretest
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="procedure.html" class="p-2 ">
+                                      Procedure
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="simulation.html" class="p-2 ">
+                                      Simulation
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="posttest.html" class="p-2 ">
+                                      Posttest
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="references.html" class="p-2 ">
+                                      References
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="contributors.html" class="p-2 ">
+                                      Contributors
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="feedback.html" class="p-2 ">
+                                      Feedback
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="nav flex-column sidebar nav-menu flex-shrink-0 px-lg-4 align-items-center align-items-lg-start hidden d-none d-lg-flex" id="menu">
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="index.html" class="p-2 ">
+                        Aim
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="theory.html" class="p-2  current-item ">
+                        Theory
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="pretest.html" class="p-2 ">
+                        Pretest
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="procedure.html" class="p-2 ">
+                        Procedure
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="simulation.html" class="p-2 ">
+                        Simulation
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="posttest.html" class="p-2 ">
+                        Posttest
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="references.html" class="p-2 ">
+                        References
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="contributors.html" class="p-2 ">
+                        Contributors
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="feedback.html" class="p-2 ">
+                        Feedback
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+          </div>          <div class="vlabs-page-content px-5 pb-4 flex-grow-1 markdown-body">
+            <div class="text-center fix-spacing">
+              <h2 id="reorder-buffer-and-out-of-order-execution">Reorder Buffer and Out-of-Order Execution</h2>
+          
+            </div>
+              <h3 id="introduction-to-reorder-buffers">Introduction to Reorder Buffers</h3>
+          <p>The <strong>Reorder Buffer (ROB)</strong> is a critical hardware structure in modern superscalar processors that enables <strong>out-of-order execution</strong> while maintaining <strong>precise interrupts</strong>. As processors evolved to exploit instruction-level parallelism (ILP), the need arose to execute instructions out of their original program order to maximize functional unit utilization and overall performance.</p>
+          <p>The challenge with out-of-order execution lies in maintaining program correctness and handling exceptions precisely. The Reorder Buffer solves this by providing a mechanism to track instruction completion and ensure that architectural state updates occur in program order, even when instruction execution happens out-of-order.</p>
+          <h3 id="historical-context-and-evolution">Historical Context and Evolution</h3>
+          <h4 id="sequential-execution-limitations">Sequential Execution Limitations</h4>
+          <p>Early processors executed instructions strictly in program order:</p>
+          <ul>
+          <li><strong>Simple Implementation</strong>: Easy to understand and implement</li>
+          <li><strong>Performance Limitations</strong>: Functional units idle when dependencies stall the pipeline</li>
+          <li><strong>Poor Resource Utilization</strong>: Available parallelism left unexploited</li>
+          </ul>
+          <h4 id="the-need-for-out-of-order-execution">The Need for Out-of-Order Execution</h4>
+          <p>As processor complexity increased, several factors drove the need for out-of-order execution:</p>
+          <ol>
+          <li><strong>Increasing Pipeline Depth</strong>: Longer pipelines made stalls more costly</li>
+          <li><strong>Multiple Functional Units</strong>: Processors gained multiple ALUs, FPUs, and memory units</li>
+          <li><strong>Variable Execution Latencies</strong>: Different operations (multiply vs. add) took different amounts of time</li>
+          <li><strong>Memory Hierarchy Complexity</strong>: Cache misses created long, unpredictable stalls</li>
+          </ol>
+          <h3 id="reorder-buffer-architecture">Reorder Buffer Architecture</h3>
+          <h4 id="basic-structure">Basic Structure</h4>
+          <p>The Reorder Buffer is organized as a <strong>circular queue</strong> with the following key components:</p>
+          <ol>
+          <li><strong>ROB Entries</strong>: Fixed number of slots (typically 32-256 entries)</li>
+          <li><strong>Head Pointer</strong>: Points to the oldest instruction ready for commit</li>
+          <li><strong>Tail Pointer</strong>: Points to the next available slot for instruction issue</li>
+          <li><strong>Entry Fields</strong>: Each entry contains instruction tracking information</li>
+          </ol>
+          <h4 id="rob-entry-contents">ROB Entry Contents</h4>
+          <p>Each Reorder Buffer entry typically contains:</p>
+          <ul>
+          <li><strong>Instruction Information</strong>: Opcode, operands, and program counter</li>
+          <li><strong>Destination Register</strong>: Architectural register to be updated</li>
+          <li><strong>Result Value</strong>: Computed result when execution completes</li>
+          <li><strong>Status Flags</strong>: Completion status, exception information</li>
+          <li><strong>Sequence Number</strong>: Program order information</li>
+          </ul>
+          <h3 id="instruction-lifecycle-in-rob">Instruction Lifecycle in ROB</h3>
+          <h4 id="phase-1-instruction-issue">Phase 1: Instruction Issue</h4>
+          <p>When an instruction is <strong>issued</strong> to the ROB:</p>
+          <ol>
+          <li><strong>Allocation</strong>: A free ROB entry is allocated at the tail</li>
+          <li><strong>Register Renaming</strong>: The destination register is mapped to the ROB entry</li>
+          <li><strong>Dependency Tracking</strong>: Source operands are identified (registers or ROB entries)</li>
+          <li><strong>Dispatch</strong>: Instruction is sent to appropriate functional unit when operands are ready</li>
+          </ol>
+          <h4 id="phase-2-instruction-execution">Phase 2: Instruction Execution</h4>
+          <p>During <strong>execution</strong>:</p>
+          <ol>
+          <li><strong>Out-of-Order Execution</strong>: Instructions execute when operands become available</li>
+          <li><strong>Result Computation</strong>: Functional units compute results independently</li>
+          <li><strong>Completion</strong>: Results are written back to the ROB entry</li>
+          <li><strong>Forwarding</strong>: Results can be forwarded to dependent instructions</li>
+          </ol>
+          <h4 id="phase-3-instruction-commit">Phase 3: Instruction Commit</h4>
+          <p>During <strong>commit</strong> (retirement):</p>
+          <ol>
+          <li><strong>In-Order Commit</strong>: Only the instruction at ROB head can commit</li>
+          <li><strong>State Update</strong>: Architectural register file is updated with the result</li>
+          <li><strong>Resource Release</strong>: ROB entry is freed and pointers are updated</li>
+          <li><strong>Exception Handling</strong>: Exceptions are processed only at commit time</li>
+          </ol>
+          <h3 id="register-renaming-with-rob">Register Renaming with ROB</h3>
+          <h4 id="the-problem-of-false-dependencies">The Problem of False Dependencies</h4>
+          <p>Without register renaming, processors face <strong>false dependencies</strong>:</p>
+          <ul>
+          <li><strong>Write-After-Read (WAR)</strong>: Anti-dependency</li>
+          <li><strong>Write-After-Write (WAW)</strong>: Output dependency</li>
+          </ul>
+          <p>These dependencies don't represent true data relationships but arise from limited architectural registers.</p>
+          <h4 id="rob-based-register-renaming">ROB-Based Register Renaming</h4>
+          <p>The Reorder Buffer serves dual purposes:</p>
+          <ol>
+          <li><strong>Instruction Sequencing</strong>: Maintaining program order for commits</li>
+          <li><strong>Register Renaming</strong>: Providing temporary register names</li>
+          </ol>
+          <p><strong>Mechanism</strong>:</p>
+          <ul>
+          <li>Each ROB entry acts as a <strong>physical register</strong></li>
+          <li><strong>Register Alias Table (RAT)</strong> maps architectural registers to ROB entries</li>
+          <li>Multiple writes to the same architectural register use different ROB entries</li>
+          <li>Dependencies are tracked through ROB entry numbers rather than register names</li>
+          </ul>
+          <h4 id="example-of-register-renaming">Example of Register Renaming</h4>
+          <p>Consider this instruction sequence:</p>
+          <pre>          ADD R1, R2, R3    ; R1 = R2 + R3
+          SUB R4, R1, R5    ; R4 = R1 - R5 (depends on ADD)
+          MUL R1, R6, R7    ; R1 = R6 * R7 (WAW with ADD)
+          AND R8, R1, R9    ; R8 = R1 &amp; R9 (depends on MUL, not ADD)
+          </pre>
+          
+          <p>With ROB-based renaming:</p>
+          <ul>
+          <li>ADD writes to ROB entry #5</li>
+          <li>SUB reads from ROB entry #5</li>
+          <li>MUL writes to ROB entry #12 (different from ADD)</li>
+          <li>AND reads from ROB entry #12</li>
+          </ul>
+          <p>The false WAW dependency between ADD and MUL is eliminated.</p>
+          <h3 id="out-of-order-execution-benefits">Out-of-Order Execution Benefits</h3>
+          <h4 id="improved-functional-unit-utilization">Improved Functional Unit Utilization</h4>
+          <p><strong>Without Out-of-Order Execution</strong>:</p>
+          <pre>          Cycle: 1  2  3  4  5  6  7  8
+          ADD:   E  E  E  -  -  -  -  -
+          MUL:   -  -  -  E  E  E  E  E
+          SUB:   -  -  -  -  -  -  -  E
+          </pre>
+          
+          <p><strong>With Out-of-Order Execution</strong>:</p>
+          <pre>          Cycle: 1  2  3  4  5  6  7  8
+          ADD:   E  E  E  -  -  -  -  -
+          MUL:   E  E  E  E  E  -  -  -
+          SUB:   -  -  -  E  -  -  -  -
+          </pre>
+          
+          <h4 id="performance-improvements">Performance Improvements</h4>
+          <ol>
+          <li><strong>Higher IPC</strong>: More instructions complete per cycle</li>
+          <li><strong>Better Resource Utilization</strong>: Functional units stay busy</li>
+          <li><strong>Latency Tolerance</strong>: Long-latency operations don't block short ones</li>
+          <li><strong>Parallelism Exploitation</strong>: Independent operations execute simultaneously</li>
+          </ol>
+          <h3 id="precise-interrupt-handling">Precise Interrupt Handling</h3>
+          <h4 id="the-challenge">The Challenge</h4>
+          <p>Out-of-order execution complicates exception handling:</p>
+          <ul>
+          <li>Instructions may complete out-of-order</li>
+          <li>Exceptions must appear to occur in program order</li>
+          <li>Processor state must be recoverable</li>
+          </ul>
+          <h4 id="rob-solution-for-precise-interrupts">ROB Solution for Precise Interrupts</h4>
+          <p>The Reorder Buffer enables <strong>precise interrupts</strong> through:</p>
+          <ol>
+          <li><strong>Deferred State Updates</strong>: Architectural state changes only at commit</li>
+          <li><strong>In-Order Commit</strong>: Exceptions are handled only when the faulting instruction reaches ROB head</li>
+          <li><strong>State Reconstruction</strong>: Precise processor state can be reconstructed from committed instructions</li>
+          </ol>
+          <h4 id="exception-handling-process">Exception Handling Process</h4>
+          <p>When an exception occurs:</p>
+          <ol>
+          <li><strong>Exception Recording</strong>: Exception information is stored in the ROB entry</li>
+          <li><strong>Continued Execution</strong>: Younger instructions may continue executing speculatively</li>
+          <li><strong>Exception Processing</strong>: When the faulting instruction reaches ROB head:<ul>
+          <li>All younger instructions are flushed</li>
+          <li>Pipeline state is restored</li>
+          <li>Exception handler is invoked</li>
+          </ul>
+          </li>
+          </ol>
+          <h3 id="performance-analysis">Performance Analysis</h3>
+          <h4 id="key-performance-metrics">Key Performance Metrics</h4>
+          <ol>
+          <li><strong>ROB Utilization</strong>: Percentage of ROB entries occupied</li>
+          <li><strong>Commit Rate</strong>: Instructions committed per cycle</li>
+          <li><strong>Average ROB Occupancy</strong>: Measure of instruction-level parallelism</li>
+          <li><strong>CPI (Cycles Per Instruction)</strong>: Overall execution efficiency</li>
+          </ol>
+          <h4 id="factors-affecting-rob-performance">Factors Affecting ROB Performance</h4>
+          <p><strong>Program Characteristics</strong>:</p>
+          <ul>
+          <li>Instruction mix and dependency patterns</li>
+          <li>Branch frequency and predictability</li>
+          <li>Memory access patterns</li>
+          </ul>
+          <p><strong>Hardware Parameters</strong>:</p>
+          <ul>
+          <li>ROB size and organization</li>
+          <li>Number and types of functional units</li>
+          <li>Issue width and commit width</li>
+          </ul>
+          <p><strong>Design Trade-offs</strong>:</p>
+          <ul>
+          <li>Larger ROB → More parallelism but higher complexity</li>
+          <li>Wider issue → Higher performance but more complex logic</li>
+          <li>Deeper speculation → Better performance but higher misprediction penalty</li>
+          </ul>
+          <h3 id="implementation-considerations">Implementation Considerations</h3>
+          <h4 id="hardware-complexity">Hardware Complexity</h4>
+          <p><strong>ROB Management</strong>:</p>
+          <ul>
+          <li><strong>Allocation Logic</strong>: Finding free entries and managing pointers</li>
+          <li><strong>Completion Detection</strong>: Identifying when instructions finish</li>
+          <li><strong>Commit Logic</strong>: Processing head instructions and updating state</li>
+          </ul>
+          <p><strong>Associative Operations</strong>:</p>
+          <ul>
+          <li><strong>Result Forwarding</strong>: Matching producing and consuming instructions</li>
+          <li><strong>Dependency Checking</strong>: Ensuring correct execution order</li>
+          <li><strong>Exception Correlation</strong>: Linking exceptions to specific instructions</li>
+          </ul>
+          <h4 id="power-and-area-considerations">Power and Area Considerations</h4>
+          <p><strong>Power Consumption</strong>:</p>
+          <ul>
+          <li>Large associative structures consume significant power</li>
+          <li>Complex control logic adds overhead</li>
+          <li>Speculative execution may waste energy</li>
+          </ul>
+          <p><strong>Area Requirements</strong>:</p>
+          <ul>
+          <li>ROB storage scales quadratically with size</li>
+          <li>Control logic complexity increases with features</li>
+          <li>Wire delays become significant in large structures</li>
+          </ul>
+          <h3 id="real-world-implementations">Real-World Implementations</h3>
+          <h4 id="intel-processors">Intel Processors</h4>
+          <p><strong>Pentium Pro (1995)</strong>:</p>
+          <ul>
+          <li>40-entry ROB</li>
+          <li>First mainstream processor with ROB</li>
+          <li>Enabled significant performance improvements</li>
+          </ul>
+          <p><strong>Modern Intel Cores</strong>:</p>
+          <ul>
+          <li>224+ entry ROB (recent generations)</li>
+          <li>Sophisticated retirement logic</li>
+          <li>Integration with μop cache and execution clusters</li>
+          </ul>
+          <h4 id="amd-processors">AMD Processors</h4>
+          <p><strong>K7/Athlon Series</strong>:</p>
+          <ul>
+          <li>72-entry ROB</li>
+          <li>Competitive performance with Intel</li>
+          <li>Focus on high clock speeds</li>
+          </ul>
+          <p><strong>Zen Architecture</strong>:</p>
+          <ul>
+          <li>224-entry ROB</li>
+          <li>Advanced branch prediction integration</li>
+          <li>Optimized for both single and multi-thread performance</li>
+          </ul>
+          <h4 id="arm-processors">ARM Processors</h4>
+          <p><strong>Cortex-A Series</strong>:</p>
+          <ul>
+          <li>Scalable ROB sizes (48-128 entries)</li>
+          <li>Power-efficient implementations</li>
+          <li>Mobile-optimized designs</li>
+          </ul>
+          <h3 id="advanced-topics">Advanced Topics</h3>
+          <h4 id="multiple-issue-and-retirement">Multiple Issue and Retirement</h4>
+          <p><strong>Superscalar Issue</strong>:</p>
+          <ul>
+          <li>Multiple instructions issued per cycle</li>
+          <li>Complex dependency checking required</li>
+          <li>Resource conflict resolution</li>
+          </ul>
+          <p><strong>Retirement Width</strong>:</p>
+          <ul>
+          <li>Multiple instructions committed per cycle</li>
+          <li>In-order retirement maintained</li>
+          <li>Exception handling complexity increases</li>
+          </ul>
+          <h4 id="integration-with-other-mechanisms">Integration with Other Mechanisms</h4>
+          <p><strong>Branch Prediction</strong>:</p>
+          <ul>
+          <li>Speculative execution beyond branches</li>
+          <li>Recovery mechanisms for mispredictions</li>
+          <li>ROB flush on branch resolution</li>
+          </ul>
+          <p><strong>Memory Disambiguation</strong>:</p>
+          <ul>
+          <li>Load/store ordering in ROB</li>
+          <li>Memory dependency speculation</li>
+          <li>Integration with cache coherence</li>
+          </ul>
+          <h4 id="future-directions">Future Directions</h4>
+          <p><strong>Emerging Trends</strong>:</p>
+          <ul>
+          <li><strong>Larger ROBs</strong>: Supporting more in-flight instructions</li>
+          <li><strong>Smarter Allocation</strong>: Adaptive sizing based on workload</li>
+          <li><strong>Power Optimization</strong>: Reducing energy consumption</li>
+          <li><strong>Machine Learning</strong>: AI-assisted instruction scheduling</li>
+          </ul>
+          <h3 id="common-misconceptions">Common Misconceptions</h3>
+          <h4 id="rob-vs-reservation-stations">ROB vs. Reservation Stations</h4>
+          <p><strong>Distinction</strong>:</p>
+          <ul>
+          <li><strong>ROB</strong>: Maintains program order and enables precise interrupts</li>
+          <li><strong>Reservation Stations</strong>: Hold instructions waiting for operands</li>
+          <li><strong>Relationship</strong>: Both work together in modern processors</li>
+          </ul>
+          <h4 id="rob-vs-physical-register-file">ROB vs. Physical Register File</h4>
+          <p><strong>Difference</strong>:</p>
+          <ul>
+          <li><strong>ROB-based</strong>: ROB entries serve as physical registers</li>
+          <li><strong>Separate PRF</strong>: Dedicated physical register file with ROB pointing to it</li>
+          <li><strong>Modern Trend</strong>: Separate physical register files are more common</li>
+          </ul>
+          <h3 id="applications-and-examples">Applications and Examples</h3>
+          <h4 id="high-performance-computing">High-Performance Computing</h4>
+          <p>ROBs enable:</p>
+          <ul>
+          <li><strong>Scientific Workloads</strong>: Long dependency chains with independent operations</li>
+          <li><strong>Multimedia Processing</strong>: SIMD operations with varying latencies</li>
+          <li><strong>Database Systems</strong>: Complex instruction mixes with memory operations</li>
+          </ul>
+          <h4 id="mobile-and-embedded-systems">Mobile and Embedded Systems</h4>
+          <p>Considerations:</p>
+          <ul>
+          <li><strong>Power Constraints</strong>: Smaller ROBs to reduce power</li>
+          <li><strong>Area Limitations</strong>: Simplified implementations</li>
+          <li><strong>Performance Needs</strong>: Balanced approach for battery life</li>
+          </ul>
+          <h3 id="conclusion">Conclusion</h3>
+          <p>The Reorder Buffer represents one of the most significant innovations in modern processor design. By decoupling instruction execution order from program order, ROBs enable dramatic performance improvements while maintaining correctness and precise interrupt semantics.</p>
+          <p>Key insights:</p>
+          <ul>
+          <li><strong>Performance</strong>: ROBs enable instruction-level parallelism exploitation</li>
+          <li><strong>Correctness</strong>: Precise interrupts maintain program semantics</li>
+          <li><strong>Complexity</strong>: Hardware complexity increases but performance gains justify the cost</li>
+          <li><strong>Evolution</strong>: Continuous refinement improves efficiency and reduces overhead</li>
+          </ul>
+          <p>Understanding ROB operation is essential for:</p>
+          <ul>
+          <li><strong>Computer Architects</strong>: Designing efficient processor implementations</li>
+          <li><strong>Compiler Writers</strong>: Optimizing code for out-of-order execution</li>
+          <li><strong>Performance Engineers</strong>: Analyzing and tuning system performance</li>
+          <li><strong>Computer Scientists</strong>: Appreciating the engineering challenges in modern processors</li>
+          </ul>
+          <p>The Reorder Buffer continues to evolve, with modern implementations supporting hundreds of in-flight instructions and sophisticated optimization techniques, making it a cornerstone of contemporary high-performance processor design.</p>
+          
+          </div>
+          <div class="bug-report-mobile">
+              <bug-report id="bug-report" title="[BUG REPORT] REORDER BUFFER AND OUT-OF-ORDER EXECUTION" page-type="text" context-info="{&quot;organisation&quot;:&quot;Virtual Labs&quot;,&quot;developer_institute&quot;:&quot;IIITH&quot;,&quot;expname&quot;:&quot;REORDER BUFFER AND OUT-OF-ORDER EXECUTION&quot;,&quot;labname&quot;:&quot;Virtual Lab&quot;,&quot;phase&quot;:&quot;Testing&quot;}" checkbox-json="{&quot;text&quot;:[&quot;Insufficient Content&quot;],&quot;video&quot;:[&quot;Insufficient Content&quot;],&quot;assesment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;assessment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;simulation&quot;:[&quot;Simulation Not Working&quot;,&quot;Incorrect Results/Observations&quot;,&quot;Insufficient/Incorrect Instructions&quot;],&quot;DEFAULT&quot;:[&quot;Page Not Loading&quot;,&quot;Content Not Visible&quot;,&quot;Incorrect Content&quot;]}" position="override" button_style="
+                          position: fixed; 
+                          bottom: 20px;
+                          right: 20px;
+                          z-index: 1;
+                          font-size: 0;
+                          padding: 25px;
+                          border-radius: 50%;
+                          border: none;
+                          background-color: #0fc0ff;
+                          background-image: url(data:image/png;base64,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);
+                          background-repeat: no-repeat;
+                          background-position: center;
+                          background-size: 30px;
+                          filter: invert(1);">
+              </bug-report>
+          </div>        </div>
+      </div>
+      <footer class="text-light pt-2 vlabs-footer d-flex flex-column">
+        <div class="row px-5 mx-0">
+          <div class="col d-flex flex-column">
+            <span class="font-weight-bold vlabs-footer-sect-name pb-2 mb-3">Community Links</span>
+            <a href="https://www.sakshat.ac.in/" class="text-light">Sakshat Portal</a>
+            <a href="http://outreach.vlabs.ac.in/" class="text-light">Outreach Portal</a>
+            <a href="https://vlab.co.in/faq" class="text-light">FAQ: Virtual Labs</a>
+          </div>
+          <div class="col d-flex flex-column">
+            <span class="font-weight-bold vlabs-footer-sect-name pb-2 mb-3">Contact Us</span>
+            <span> Phone: General Information: 011-26582050 </span>
+            <span> Email: support@vlabs.ac.in </span>
+          </div>
+          <div class="col d-flex flex-column">
+            <span class="font-weight-bold vlabs-footer-sect-name pb-2 mb-3">Follow Us</span>
+            <div class="social-links">
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #55acee;" href="https://twitter.com/TheVirtualLabs">
+      	  <i class="fab fa-twitter"></i>
+      	</a>
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #3b5998;" href="https://www.facebook.com/Virtual-Labs-IIT-Delhi-301510159983871/">
+      	  <i class="fab fa-facebook"></i>
+      	</a>
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #e52d27;" href="https://www.youtube.com/watch?v=asxRaOgk6a0">
+      	  <i class="fab fa-youtube"></i>
+      	</a>
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #2867B2;" href="https://in.linkedin.com/in/virtual-labs-008ba9136">
+      	  <i class="fab fa-linkedin"></i>
+      	</a>
+            </div>
+          </div>
+        </div>
+        <div class="m-0 py-2 text-center" style="font-family: &quot;Open Sans&quot;, sans-serif; background: #212121;">
+          <a class="text-primary font-weight-bold" href="https://www.gnu.org/licenses/agpl-3.0.en.html"> AGPL 3.0 </a>
+          &nbsp;&amp;&nbsp;
+          <a class="text-primary font-weight-bold" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"> Creative Commons (CC BY-NC-SA 4.0) </a>
+        </div>
+      </footer>
+    <script src="./assets/js/toggleSidebar.js"></script>
+    <script src="./assets/js/event-handler.js"></script>
+
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register("sw.js");
+        });
+      }
+    </script>
+  
+
+<script type="module" src="https://cdn.vlabs.ac.in/bug-report/vlabs-bug-report.js"></script><script type="module" src="/exp-reorder-buffers-iiith/plugins/svc-rating/index.js"></script><script type="module" src="/exp-reorder-buffers-iiith/plugins/svc-rating/config.js"></script><script type="module" src="https://apis.google.com/js/api.js"></script></body></html>

@@ -1,0 +1,6 @@
+; Independent ILP
+ADD R1, R2, R3
+ADD R4, R5, R6
+MUL R7, R8, R9
+ADD R10, R11, R12
+SUB R13, R14, R15

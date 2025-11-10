@@ -1,0 +1,15 @@
+
+/home/runner/work/exp-reorder-buffers-iiith/exp-reorder-buffers-iiith/experiment/simulation/js/main.js
+  513:22  warning  'instruction' is defined but never used         no-unused-vars
+  785:10  warning  'loadSelectedSample' is defined but never used  no-unused-vars
+  797:10  warning  'addInstruction' is defined but never used      no-unused-vars
+  802:10  warning  'loadProgram' is defined but never used         no-unused-vars
+  807:10  warning  'stepExecution' is defined but never used       no-unused-vars
+  812:10  warning  'runSimulation' is defined but never used       no-unused-vars
+  817:10  warning  'pauseSimulation' is defined but never used     no-unused-vars
+  822:10  warning  'resetSimulation' is defined but never used     no-unused-vars
+  827:10  warning  'simulateException' is defined but never used   no-unused-vars
+  832:10  warning  'openModal' is defined but never used           no-unused-vars
+
+✖ 10 problems (0 errors, 10 warnings)
+
