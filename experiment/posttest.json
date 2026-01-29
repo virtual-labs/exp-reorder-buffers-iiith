@@ -2,38 +2,157 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "After completing the ROB simulation, what is the main benefit of having a large Reorder Buffer?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "Faster clock speeds",
+        "b": "More instructions can be in-flight, increasing parallelism",
+        "c": "Reduced power consumption",
+        "d": "Simplified instruction decode"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "ROB size doesn't directly affect clock speed",
+        "b": "Correct! A larger ROB allows more instructions to be issued and pending, enabling better utilization of functional units and higher instruction-level parallelism",
+        "c": "Larger ROBs typically increase power consumption",
+        "d": "ROB size doesn't simplify decode logic"
       },
-      "correctAnswer": "a",
+      "correctAnswer": "b",
       "difficulty": "beginner"
     },
     {
-      "question": "This is a Sample Question 2?",
+      "question": "Based on your simulation experience, when does an instruction get removed from the ROB?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "As soon as it finishes execution",
+        "b": "When its result is needed by another instruction",
+        "c": "When it reaches the head of ROB and commits successfully",
+        "d": "After a fixed number of cycles"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Instructions remain in ROB after execution until commit",
+        "b": "Results can be forwarded while instruction stays in ROB",
+        "c": "Correct! Instructions are removed only when they reach the head of ROB and commit in program order",
+        "d": "Removal is based on program order, not timing"
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
+    },
+    {
+      "question": "From your simulation observations, what happens to ROB entries when an exception occurs?",
+      "answers": {
+        "a": "All entries are immediately cleared",
+        "b": "Only the faulting instruction is removed",
+        "c": "Instructions before the exception commit, younger instructions are flushed",
+        "d": "The processor continues normal operation"
+      },
+      "explanations": {
+        "a": "Not all entries are cleared; older instructions may still commit",
+        "b": "Younger instructions must also be handled to maintain correctness",
+        "c": "Correct! Instructions older than the exception can still commit normally, but all younger instructions must be flushed to maintain precise interrupt semantics",
+        "d": "Exceptions require special handling and pipeline recovery"
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Based on the simulation timeline you observed, why might an instruction stay in the 'Complete' state for multiple cycles?",
+      "answers": {
+        "a": "The functional unit is still busy",
+        "b": "It's waiting for older instructions to commit first",
+        "c": "The instruction is being re-executed",
+        "d": "There's insufficient memory bandwidth"
+      },
+      "explanations": {
+        "a": "Once complete, the functional unit is freed",
+        "b": "Correct! Completed instructions must wait for all older instructions to commit first, maintaining program order for commits",
+        "c": "Completed instructions don't get re-executed",
+        "d": "Memory bandwidth affects execution, not post-completion waiting"
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "In your simulation, how does register renaming interact with the ROB?",
+      "answers": {
+        "a": "They operate independently",
+        "b": "ROB entries serve as temporary register names until commit",
+        "c": "Register renaming replaces the need for ROB",
+        "d": "ROB only handles memory operations"
+      },
+      "explanations": {
+        "a": "They work closely together in modern processors",
+        "b": "Correct! ROB entries act as physical register names, allowing multiple instructions writing to the same logical register to coexist without conflicts",
+        "c": "Both mechanisms are needed and work together",
+        "d": "ROB handles all types of instructions, not just memory operations"
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "From analyzing the commit log in your simulation, what can you conclude about instruction commit order?",
+      "answers": {
+        "a": "Instructions commit in execution completion order",
+        "b": "Instructions commit based on their execution time",
+        "c": "Instructions always commit in original program order",
+        "d": "Instructions commit randomly to maximize throughput"
+      },
+      "explanations": {
+        "a": "Commit order differs from completion order to maintain correctness",
+        "b": "Execution time doesn't determine commit order",
+        "c": "Correct! The ROB ensures that regardless of execution order, instructions commit in the original program sequence to maintain program semantics",
+        "d": "Random commit order would violate program correctness"
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What performance metric from your simulation best indicates ROB effectiveness?",
+      "answers": {
+        "a": "Clock frequency",
+        "b": "ROB utilization percentage and average CPI",
+        "c": "Cache hit rate",
+        "d": "Memory bandwidth usage"
+      },
+      "explanations": {
+        "a": "Clock frequency is determined by circuit design, not ROB efficiency",
+        "b": "Correct! High ROB utilization indicates good instruction-level parallelism, and lower CPI shows performance improvement from out-of-order execution",
+        "c": "Cache performance is separate from ROB effectiveness",
+        "d": "Memory bandwidth is not directly related to ROB performance"
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Based on your simulation experience with dependencies, which scenario would benefit most from ROB and out-of-order execution?",
+      "answers": {
+        "a": "A sequence of dependent instructions with long latencies",
+        "b": "Independent instructions with varying execution times",
+        "c": "Only memory operations",
+        "d": "Only arithmetic operations"
+      },
+      "explanations": {
+        "a": "Dependent instructions can't execute out-of-order, limiting ROB benefits",
+        "b": "Correct! Independent instructions with different latencies can execute out-of-order, maximizing functional unit utilization and overall throughput",
+        "c": "Mixed instruction types provide more opportunities for parallelism",
+        "d": "Mixed instruction types provide more opportunities for parallelism"
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "From your advanced simulation scenarios, what is the main challenge in implementing large ROBs in real processors?",
+      "answers": {
+        "a": "Software compatibility issues",
+        "b": "Hardware complexity, power consumption, and access time",
+        "c": "Operating system limitations",
+        "d": "Compiler optimization difficulties"
+      },
+      "explanations": {
+        "a": "ROB implementation is transparent to software",
+        "b": "Correct! Large ROBs require complex tracking logic, consume significant power, and may increase access latency, creating engineering trade-offs",
+        "c": "OS is generally unaware of ROB implementation details",
+        "d": "Compilers don't need to be aware of specific ROB sizes"
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
     }
   ]
 }
